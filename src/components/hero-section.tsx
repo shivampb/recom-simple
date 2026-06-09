@@ -62,7 +62,7 @@ export function HeroSection() {
           className="text-3xl sm:text-5xl lg:text-5xl xl:text-[56px] lg:whitespace-nowrap font-extrabold tracking-tight text-slate-900 mb-5 sm:mb-6 leading-[1.12] text-center"
         >
           See How{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-cyan-500">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-primary via-blue-500 to-cyan-500">
             AI Can Transform
           </span>{" "}
           Your Store
@@ -89,7 +89,7 @@ export function HeroSection() {
           className="max-w-2xl mx-auto mb-7 sm:mb-8"
         >
           <div className="flex items-center bg-white rounded-full shadow-lg shadow-blue-100/60 border border-slate-200 p-1.5 sm:p-2 gap-2">
-            <Globe className="w-5 h-5 text-slate-400 ml-3 flex-shrink-0" />
+            <Globe className="w-5 h-5 text-slate-400 ml-3 shrink-0" />
             <input
               type="text"
               placeholder="Enter your store URL (e.g. https://mystore.com)"
@@ -100,10 +100,10 @@ export function HeroSection() {
             />
             <button
               type="submit"
-              className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold text-sm sm:text-base px-5 sm:px-6 py-2.5 sm:py-3 rounded-full transition-colors shadow-sm flex-shrink-0 whitespace-nowrap"
+              className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold text-sm sm:text-base px-5 sm:px-6 py-2.5 sm:py-3 rounded-full transition-colors shadow-sm shrink-0 whitespace-nowrap"
               data-testid="button-analyze"
             >
-              <Zap className="w-4 h-4 flex-shrink-0" />
+              <Zap className="w-4 h-4 shrink-0" />
               <span className="hidden xs:inline sm:inline">Analyze My Store</span>
               <span className="xs:hidden sm:hidden">Analyze</span>
             </button>
@@ -126,7 +126,7 @@ export function HeroSection() {
               key={i}
               className="flex items-center gap-2 text-slate-500 text-xs sm:text-sm font-medium"
             >
-              <item.icon className="w-4 h-4 text-primary flex-shrink-0" />
+              <item.icon className="w-4 h-4 text-primary shrink-0" />
               {item.text}
             </div>
           ))}

@@ -98,7 +98,7 @@ export function AnalysisSection() {
                   }`}
                 >
                   <div
-                    className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                    className={`w-2 h-2 rounded-full shrink-0 ${
                       activeItems.includes(index)
                         ? "bg-primary shadow-[0_0_8px_rgba(37,99,235,0.5)]"
                         : "bg-muted"

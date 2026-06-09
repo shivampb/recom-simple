@@ -56,7 +56,7 @@ export function DashboardSection() {
         <div className="bg-slate-800 rounded-xl sm:rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
           {/* Browser chrome */}
           <div className="border-b border-slate-700 bg-slate-800/50 px-3 sm:px-4 py-3 flex items-center gap-3">
-            <div className="flex gap-1.5 flex-shrink-0">
+            <div className="flex gap-1.5 shrink-0">
               <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
               <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
               <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
@@ -77,7 +77,7 @@ export function DashboardSection() {
               ].map((stat, i) => (
                 <div key={i} className="bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-700">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <stat.icon className={`w-4 h-4 ${stat.color} flex-shrink-0`} />
+                    <stat.icon className={`w-4 h-4 ${stat.color} shrink-0`} />
                     <span className="text-slate-400 text-xs font-medium leading-tight">{stat.label}</span>
                   </div>
                   <p className="text-xl sm:text-2xl font-bold">{stat.value}</p>

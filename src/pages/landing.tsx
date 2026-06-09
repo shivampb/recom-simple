@@ -441,7 +441,7 @@ export function Landing() {
               <div className="card-tier-label">Starter</div>
               <div className="card-price">
                 <span className="currency">$</span>
-                <span className="price-number" data-monthly="49" data-annual="39">49</span>
+                <span className="price-number" data-monthly="9" data-annual="7">9</span>
                 <span className="period">/month</span>
               </div>
               <p className="card-desc">Perfect for emerging stores looking to automate basic customer FAQs and simple order status queries.</p>

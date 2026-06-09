@@ -35,9 +35,9 @@ export function RoiCalculator() {
     <section className="roi-section animate-on-scroll">
       <div className="container">
         <div className="section-header text-center">
-          <span className="badge badge-glow">ROI Calculator</span>
-          <h2>Calculate Your Revenue Lift</h2>
-          <p className="subtitle">See how much additional revenue RecomAI can generate for your store each month.</p>
+          <span className="section-tagline">ROI Calculator</span>
+          <h2 className="section-title">Calculate Your Revenue Lift</h2>
+          <p className="section-subtitle">See how much additional revenue RecomAI can generate for your store each month.</p>
         </div>
         
         <div className="roi-calculator-wrapper">

@@ -8,7 +8,7 @@ import { TrendingUp, PieChart, Activity, Globe } from "lucide-react";
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55 } },
 };
 
 const lineData = [

@@ -292,6 +292,9 @@ export function Landing() {
         </div>
       </section>
 
+      {/* ROI Calculator Section */}
+      <RoiCalculator />
+
       {/* Merchant Dashboard Section */}
       <section className="dashboard-section" id="dashboard">
         <div className="container">
@@ -568,8 +571,6 @@ export function Landing() {
           </div>
         </div>
       </section>
-      {/* ROI Calculator Section */}
-      <RoiCalculator />
 
       {/* Action Section / Newsletter */}
       <section className="cta-banner-section">

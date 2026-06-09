@@ -102,8 +102,8 @@ export function RoiCalculator() {
               <div className="roi-divider"></div>
               
               <div className="roi-result-item highlight">
-                <div className="roi-result-label text-gradient">Additional Monthly Revenue</div>
-                <div className="roi-result-value boost text-gradient">+{formatCurrency(extraRevenue)}</div>
+                <div className="roi-result-label">Additional Monthly Revenue</div>
+                <div className="roi-result-value boost">+{formatCurrency(extraRevenue)}</div>
                 <div className="roi-micro-text">Based on a conservative 25% AI-driven conversion lift</div>
               </div>
               

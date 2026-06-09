@@ -1372,7 +1372,7 @@ section {
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
 }
 
-.dash-& {
+.dash-body {
     padding: 24px;
     display: flex;
     flex-direction: column;

@@ -38,7 +38,7 @@ export function HeroSection() {
         }}
       />
 
-      <div className="w-full max-w-4xl mx-auto text-center">
+      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto text-center">
         {/* FREE badge */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -59,7 +59,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.08 }}
-          className="text-4xl sm:text-5xl lg:text-[64px] font-extrabold tracking-tight text-slate-900 mb-5 sm:mb-6 leading-[1.12]"
+          className="text-3xl sm:text-5xl lg:text-5xl xl:text-[56px] lg:whitespace-nowrap font-extrabold tracking-tight text-slate-900 mb-5 sm:mb-6 leading-[1.12] text-center"
         >
           See How{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-cyan-500">

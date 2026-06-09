@@ -108,7 +108,7 @@ export function ConversionSection() {
                 </div>
                 <p className="text-blue-100 text-sm mb-1">Starter Plan</p>
                 <div className="flex items-end gap-1 mb-1">
-                  <span className="text-4xl sm:text-5xl font-extrabold">$29</span>
+                  <span className="text-4xl sm:text-5xl font-extrabold">$9</span>
                   <span className="text-blue-200 text-sm mb-1.5">/ month</span>
                 </div>
                 <p className="text-blue-200 text-xs mb-6">

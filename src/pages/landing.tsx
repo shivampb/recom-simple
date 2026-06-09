@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/landing.css";
+// @ts-ignore
 import { initLandingScript } from "./landing-script.js";
 import { SharedNav } from "../components/shared-nav";
 import { SharedFooter } from "../components/shared-footer";
+import { RoiCalculator } from "../components/roi-calculator";
 
 export function Landing() {
   useEffect(() => {
@@ -460,7 +462,7 @@ export function Landing() {
 
             <div className="pricing-card featured animate-on-scroll">
               <div className="popular-tag">MOST POPULAR</div>
-              <div class="card-tier-label">Growth</div>
+              <div className="card-tier-label">Growth</div>
               <div className="card-price">
                 <span className="currency">$</span>
                 <span className="price-number" data-monthly="149" data-annual="119">149</span>
@@ -566,6 +568,8 @@ export function Landing() {
           </div>
         </div>
       </section>
+      {/* ROI Calculator Section */}
+      <RoiCalculator />
 
       {/* Action Section / Newsletter */}
       <section className="cta-banner-section">

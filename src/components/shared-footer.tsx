@@ -46,7 +46,6 @@ export function SharedFooter() {
 
         <div className="footer-bottom-bar">
           <p>&copy; 2026 recomai Inc. All rights reserved. Designed for hyper-growth brands.</p>
-          <p className="footer-credit">Developed with <i className="fa-solid fa-heart text-gradient-icon"></i> by Antigravity</p>
         </div>
       </div>
     </footer>

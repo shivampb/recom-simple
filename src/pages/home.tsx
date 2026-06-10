@@ -8,12 +8,14 @@ import { FeaturesSection } from "@/components/features-section";
 import { DashboardSection } from "@/components/dashboard-section";
 import { ImpactSection } from "@/components/impact-section";
 import { CTASection } from "@/components/cta-section";
+import { CustomCursor } from "@/components/custom-cursor";
 
 export default function Home() {
   const { url } = useStoreContext();
 
   return (
     <main className="min-h-screen bg-background overflow-x-hidden font-sans">
+      <CustomCursor />
       <div className="landing-root">
         <SharedNav />
       </div>

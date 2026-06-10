@@ -1,15 +1,28 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Globe, Zap, Shield, Users } from "lucide-react";
+import { Globe, Zap, Shield, Users, Phone } from "lucide-react";
 import { useStoreContext } from "@/lib/store-context";
 
 export function HeroSection() {
   const { setUrl } = useStoreContext();
   const [inputValue, setInputValue] = useState("");
+  const [phoneValue, setPhoneValue] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (inputValue.trim()) {
+    const cleanPhone = phoneValue.trim();
+    
+    // Validate that the phone number starts with a '+' (country code indicator)
+    if (!cleanPhone.startsWith("+")) {
+      const phoneInput = document.getElementById("hero-phone-input") as HTMLInputElement;
+      if (phoneInput) {
+        phoneInput.setCustomValidity("Please include '+' and your country code (e.g. +1 555 000 0000)");
+        phoneInput.reportValidity();
+      }
+      return;
+    }
+
+    if (inputValue.trim() && cleanPhone) {
       setUrl(inputValue.trim());
       setTimeout(() => {
         const el = document.getElementById("analysis");
@@ -91,21 +104,51 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.24 }}
           onSubmit={handleSubmit}
-          className="max-w-2xl mx-auto mb-7 sm:mb-8"
+          className="max-w-4xl mx-auto mb-7 sm:mb-8"
         >
-          <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full shadow-lg shadow-blue-100/60 border border-slate-200 p-1.5 sm:p-2 gap-2">
-            <Globe className="w-5 h-5 text-slate-400 ml-3 shrink-0" />
-            <input
-              type="text"
-              placeholder="Enter your store URL (e.g. https://mystore.com)"
-              className="flex-1 min-w-0 text-sm sm:text-base text-slate-700 placeholder:text-slate-400 bg-transparent outline-none py-2 sm:py-2.5"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              data-testid="input-store-url"
-            />
+          <div className="flex flex-col md:flex-row items-stretch md:items-center bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-full shadow-lg shadow-blue-100/60 border border-slate-200 p-2 gap-2 sm:gap-3 text-left">
+            {/* Store URL Input block */}
+            <div className="flex items-center flex-1 min-w-0 gap-2 px-2 py-1.5 md:py-0">
+              <Globe className="w-5 h-5 text-slate-400 shrink-0" />
+              <input
+                type="url"
+                required
+                placeholder="Store URL (e.g. https://mystore.com)"
+                className="flex-1 min-w-0 text-sm sm:text-base text-slate-700 placeholder:text-slate-400 bg-transparent outline-none py-1.5 md:py-2.5"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                data-testid="input-store-url"
+              />
+            </div>
+
+            {/* Divider */}
+            <div className="hidden md:block w-[1px] h-6 bg-slate-200 shrink-0" />
+            <div className="block md:hidden h-[1px] w-full bg-slate-100 shrink-0" />
+
+            {/* Phone Number Input block */}
+            <div className="flex items-center flex-1 min-w-0 gap-2 px-2 py-1.5 md:py-0">
+              <Phone className="w-5 h-5 text-slate-400 shrink-0" />
+              <input
+                id="hero-phone-input"
+                type="tel"
+                required
+                pattern="^\+[0-9\s\-()]{7,20}$"
+                title="Please include '+' and your country code (e.g., +1 234 567 8900)"
+                placeholder="Phone (e.g. +1 555 000 0000)"
+                className="flex-1 min-w-0 text-sm sm:text-base text-slate-700 placeholder:text-slate-400 bg-transparent outline-none py-1.5 md:py-2.5"
+                value={phoneValue}
+                onChange={(e) => {
+                  setPhoneValue(e.target.value);
+                  e.target.setCustomValidity("");
+                }}
+                data-testid="input-phone-number"
+              />
+            </div>
+
+            {/* Submit button */}
             <button
               type="submit"
-              className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold text-sm sm:text-base px-5 sm:px-6 py-2.5 sm:py-3 rounded-full transition-colors shadow-sm shrink-0 whitespace-nowrap"
+              className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/95 text-white font-bold text-sm sm:text-base px-6 py-3 md:py-2.5 rounded-xl md:rounded-full transition-colors shadow-sm shrink-0 whitespace-nowrap cursor-pointer"
               data-testid="button-analyze"
             >
               <Zap className="w-4 h-4 shrink-0" />

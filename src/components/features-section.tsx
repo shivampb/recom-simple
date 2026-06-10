@@ -10,7 +10,7 @@ import { SiWhatsapp, SiInstagram, SiFacebook } from "react-icons/si";
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
 };
 
 function PhoneFrame({ children }: { children: React.ReactNode }) {

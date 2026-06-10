@@ -22,23 +22,68 @@ export function AnalysisSection() {
   const [progress, setProgress] = useState(0);
   const [activeItems, setActiveItems] = useState<number[]>([]);
 
+  const getProgressMessage = (pct: number) => {
+    if (pct < 12) return "Connecting to store API...";
+    if (pct < 28) return "Fetching product catalog details...";
+    if (pct < 45) return "Generating vector embeddings for items...";
+    if (pct < 62) return "Analyzing cart abandonment triggers...";
+    if (pct < 78) return "Calculating support ticket pattern metrics...";
+    if (pct < 92) return "Identifying high-impact growth opportunities...";
+    if (pct < 100) return "Optimizing conversational models...";
+    return "Analysis complete";
+  };
+
   useEffect(() => {
     setProgress(0);
     setActiveItems([]);
+    
     let currentProgress = 0;
-    const interval = setInterval(() => {
-      currentProgress += 2;
+    let timer: any;
+
+    const tick = () => {
+      let increment = 1;
+      let delay = 100;
+
+      if (currentProgress < 20) {
+        // Fast start: takes ~800ms
+        increment = 2; 
+        delay = 80;
+      } else if (currentProgress < 50) {
+        // Medium loading catalogs: takes ~2400ms
+        increment = Math.random() > 0.5 ? 2 : 1; 
+        delay = 120;
+      } else if (currentProgress < 75) {
+        // Heavy processing (vectors, support logs): takes ~3300ms
+        increment = Math.random() > 0.85 ? 2 : 1;
+        delay = 150;
+      } else if (currentProgress < 90) {
+        // The "realistic stutter" near 80-88%: takes ~2750ms
+        increment = Math.random() > 0.4 ? 1 : 0;
+        delay = 110;
+      } else {
+        // Fast finish: takes ~750ms
+        increment = Math.random() > 0.5 ? 3 : 2;
+        delay = 190;
+      }
+
+      currentProgress = Math.min(currentProgress + increment, 100);
       setProgress(currentProgress);
+
       const itemsToShow = Math.floor((currentProgress / 100) * OPPORTUNITIES.length);
       setActiveItems(Array.from({ length: itemsToShow }, (_, i) => i));
-      if (currentProgress >= 100) {
-        clearInterval(interval);
+
+      if (currentProgress < 100) {
+        timer = setTimeout(tick, delay);
+      } else {
         setTimeout(() => {
           document.getElementById("conversion-section")?.scrollIntoView({ behavior: "smooth" });
-        }, 800);
+        }, 1000);
       }
-    }, 50);
-    return () => clearInterval(interval);
+    };
+
+    timer = setTimeout(tick, 200);
+
+    return () => clearTimeout(timer);
   }, [storeName]);
 
   return (
@@ -71,8 +116,8 @@ export function AnalysisSection() {
                 ) : (
                   <CheckCircle2 className="w-4 h-4 text-green-500" />
                 )}
-                <span className="text-xs sm:text-sm">
-                  {progress < 100 ? "Analyzing store vectors..." : "Analysis complete"}
+                <span className="text-xs sm:text-sm font-medium tracking-wide transition-all duration-300">
+                  {getProgressMessage(progress)}
                 </span>
               </span>
               <span className="text-primary font-bold">{progress}%</span>

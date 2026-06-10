@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useStoreContext } from "@/lib/store-context";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,9 +8,51 @@ import {
 } from "lucide-react";
 import { SiWhatsapp, SiInstagram, SiFacebook } from "react-icons/si";
 
-const FADE_UP = {
+const FADE_UP: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
+};
+
+const chatContainer: Variants = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 1.0,
+      delayChildren: 0.4
+    }
+  }
+};
+
+const chatBubble: Variants = {
+  hidden: { opacity: 0, y: 15, scale: 0.95 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { type: "spring", stiffness: 250, damping: 20 } 
+  }
+};
+
+const popupContainer: Variants = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.4,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const popupItem: Variants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { type: "spring", stiffness: 250, damping: 20 } 
+  }
 };
 
 function PhoneFrame({ children }: { children: React.ReactNode }) {
@@ -43,8 +85,8 @@ function BrowserFrame({ children, url }: { children: React.ReactNode; url: strin
 function ChatHeader({ name }: { name: string }) {
   return (
     <div className="bg-primary px-3 py-2.5 text-white flex items-center gap-2.5 shrink-0">
-      <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-        <MessageSquare className="w-3.5 h-3.5" />
+      <div className="w-7 h-7 rounded-full overflow-hidden shrink-0">
+        <img src="/material/bot dp.png" alt="Bot DP" className="w-full h-full object-cover" />
       </div>
       <div className="min-w-0">
         <p className="font-semibold text-xs truncate">{name} AI</p>
@@ -60,8 +102,8 @@ function ChatHeader({ name }: { name: string }) {
 function BotBubble({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex gap-2 items-start">
-      <div className="w-6 h-6 rounded-full bg-primary shrink-0 flex items-center justify-center mt-0.5">
-        <MessageSquare className="w-3 h-3 text-white" />
+      <div className="w-6 h-6 rounded-full overflow-hidden shrink-0 mt-0.5">
+        <img src="/material/bot dp.png" alt="Bot DP" className="w-full h-full object-cover" />
       </div>
       <div className="bg-white rounded-2xl rounded-tl-none shadow-sm border text-xs text-foreground p-2.5 max-w-[85%]">
         {children}
@@ -138,26 +180,36 @@ export function FeaturesSection() {
         <div className="flex justify-center">
           <PhoneFrame>
             <ChatHeader name={storeName} />
-            <div className="flex-1 bg-slate-50 p-3 space-y-3 overflow-y-auto">
-              <UserBubble>Can you help me find something?</UserBubble>
-              <BotBubble>
-                <p className="mb-2">Based on your browsing, you might love these:</p>
-                {[
-                  { name: "Running Shoes X3", price: "$89", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&q=80" },
-                  { name: "Compression Socks", price: "$24", img: "https://images.unsplash.com/photo-1582966772680-860e372bb558?w=100&q=80" },
-                  { name: "Sports Bottle Pro", price: "$32", img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=100&q=80" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg border mb-1">
-                    <img src={item.img} alt={item.name} className="w-9 h-9 rounded-md shrink-0 object-cover" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold truncate">{item.name}</p>
-                      <p className="text-xs text-primary font-bold">{item.price}</p>
+            <motion.div 
+              variants={chatContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.4 }}
+              className="flex-1 bg-slate-50 p-3 space-y-3 overflow-y-auto"
+            >
+              <motion.div variants={chatBubble} className="origin-bottom-right">
+                <UserBubble>Can you help me find something?</UserBubble>
+              </motion.div>
+              <motion.div variants={chatBubble} className="origin-bottom-left">
+                <BotBubble>
+                  <p className="mb-2">Based on your browsing, you might love these:</p>
+                  {[
+                    { name: "Running Shoes X3", price: "$89", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&q=80" },
+                    { name: "Compression Socks", price: "$24", img: "https://images.unsplash.com/photo-1582966772680-860e372bb558?w=100&q=80" },
+                    { name: "Sports Bottle Pro", price: "$32", img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=100&q=80" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg border mb-1">
+                      <img src={item.img} alt={item.name} className="w-9 h-9 rounded-md shrink-0 object-cover" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold truncate">{item.name}</p>
+                        <p className="text-xs text-primary font-bold">{item.price}</p>
+                      </div>
+                      <button className="text-xs bg-primary text-white px-2 py-1 rounded-lg shrink-0">Add</button>
                     </div>
-                    <button className="text-xs bg-primary text-white px-2 py-1 rounded-lg shrink-0">Add</button>
-                  </div>
-                ))}
-              </BotBubble>
-            </div>
+                  ))}
+                </BotBubble>
+              </motion.div>
+            </motion.div>
             <div className="border-t p-2 bg-white flex gap-2 shrink-0">
               <div className="flex-1 border rounded-xl px-3 py-1.5 text-xs text-muted-foreground">Message...</div>
               <button className="bg-primary rounded-xl p-1.5"><MessageSquare className="w-3.5 h-3.5 text-white" /></button>
@@ -174,26 +226,40 @@ export function FeaturesSection() {
         <div className="order-2 lg:order-1 flex justify-center">
           <PhoneFrame>
             <ChatHeader name={storeName} />
-            <div className="flex-1 bg-slate-50 p-3 space-y-3 overflow-y-auto">
-              <UserBubble>I have a question about shipping.</UserBubble>
-              <BotBubble>
-                <p className="mb-2.5">Happy to help! Reach me on your preferred channel:</p>
-                <div className="grid grid-cols-2 gap-1.5">
-                  {[
-                    { icon: <SiWhatsapp className="text-green-500 w-4 h-4" />, name: "WhatsApp" },
-                    { icon: <SiInstagram className="text-pink-500 w-4 h-4" />, name: "Instagram" },
-                    { icon: <SiFacebook className="text-blue-600 w-4 h-4" />, name: "Facebook" },
-                    { icon: <Users className="text-purple-500 w-4 h-4" />, name: "Groups" },
-                  ].map((ch, i) => (
-                    <button key={i} className="flex items-center gap-1.5 p-2 border rounded-lg bg-white text-xs font-medium">
-                      {ch.icon} {ch.name}
-                    </button>
-                  ))}
-                </div>
-              </BotBubble>
-              <UserBubble>WhatsApp please!</UserBubble>
-              <BotBubble>Redirecting you to WhatsApp — our team responds within minutes!</BotBubble>
-            </div>
+            <motion.div 
+              variants={chatContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.4 }}
+              className="flex-1 bg-slate-50 p-3 space-y-3 overflow-y-auto"
+            >
+              <motion.div variants={chatBubble} className="origin-bottom-right">
+                <UserBubble>I have a question about shipping.</UserBubble>
+              </motion.div>
+              <motion.div variants={chatBubble} className="origin-bottom-left">
+                <BotBubble>
+                  <p className="mb-2.5">Happy to help! Reach me on your preferred channel:</p>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {[
+                      { icon: <SiWhatsapp className="text-green-500 w-4 h-4" />, name: "WhatsApp" },
+                      { icon: <SiInstagram className="text-pink-500 w-4 h-4" />, name: "Instagram" },
+                      { icon: <SiFacebook className="text-blue-600 w-4 h-4" />, name: "Facebook" },
+                      { icon: <Users className="text-purple-500 w-4 h-4" />, name: "Groups" },
+                    ].map((ch, i) => (
+                      <button key={i} className="flex items-center gap-1.5 p-2 border rounded-lg bg-white text-xs font-medium">
+                        {ch.icon} {ch.name}
+                      </button>
+                    ))}
+                  </div>
+                </BotBubble>
+              </motion.div>
+              <motion.div variants={chatBubble} className="origin-bottom-right">
+                <UserBubble>WhatsApp please!</UserBubble>
+              </motion.div>
+              <motion.div variants={chatBubble} className="origin-bottom-left">
+                <BotBubble>Redirecting you to WhatsApp — our team responds within minutes!</BotBubble>
+              </motion.div>
+            </motion.div>
             <div className="border-t p-2 bg-white flex gap-2 shrink-0">
               <div className="flex-1 border rounded-xl px-3 py-1.5 text-xs text-muted-foreground">Message...</div>
               <button className="bg-primary rounded-xl p-1.5"><MessageSquare className="w-3.5 h-3.5 text-white" /></button>
@@ -302,16 +368,22 @@ export function FeaturesSection() {
         </div>
         <div>
           <BrowserFrame url={`${storeName.toLowerCase()}.com/products`}>
-            <div className="p-4 sm:p-5">
-              <div className="flex gap-3 mb-4">
+            <motion.div 
+              variants={popupContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.4 }}
+              className="p-4 sm:p-5"
+            >
+              <motion.div variants={popupItem} className="flex gap-3 mb-4 origin-bottom">
                 <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=80" alt="Running Shoes X3" className="w-20 h-20 rounded-lg shrink-0 object-cover" />
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-sm mb-1">Running Shoes X3</p>
                   <p className="text-primary font-bold text-lg mb-2">$89.00</p>
                   <Button size="sm" className="w-full text-xs h-8">Add to Cart</Button>
                 </div>
-              </div>
-              <div className="border-2 border-primary/30 bg-blue-50/80 rounded-xl p-3 relative">
+              </motion.div>
+              <motion.div variants={popupItem} className="border-2 border-primary/30 bg-blue-50/80 rounded-xl p-3 relative origin-top">
                 <div className="absolute -top-3 left-4 bg-primary text-white text-xs font-bold px-2.5 py-0.5 rounded-full">
                   AI Recommendation
                 </div>
@@ -329,8 +401,8 @@ export function FeaturesSection() {
                   ))}
                 </div>
                 <Button size="sm" className="w-full bg-primary text-xs h-8">Bundle &amp; Save 15%</Button>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </BrowserFrame>
         </div>
       </motion.div>
@@ -350,23 +422,29 @@ export function FeaturesSection() {
                   <p className="text-xs text-blue-100">Bot active</p>
                 </div>
               </div>
-              <div className="p-2.5 space-y-2 bg-slate-50">
-                <div className="flex gap-1.5">
-                  <div className="w-5 h-5 rounded-full bg-primary shrink-0 flex items-center justify-center">
-                    <MessageSquare className="w-2.5 h-2.5 text-white" />
+              <motion.div 
+                variants={chatContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.4 }}
+                className="p-2.5 space-y-2 bg-slate-50"
+              >
+                <motion.div variants={chatBubble} className="flex gap-1.5 origin-bottom-left">
+                  <div className="w-5 h-5 rounded-full overflow-hidden shrink-0">
+                    <img src="/material/bot dp.png" alt="Bot DP" className="w-full h-full object-cover" />
                   </div>
                   <div className="bg-white rounded-xl rounded-tl-none text-xs p-2 shadow-sm border">Hi! How can I help?</div>
-                </div>
-                <div className="flex justify-end">
+                </motion.div>
+                <motion.div variants={chatBubble} className="flex justify-end origin-bottom-right">
                   <div className="bg-primary text-white rounded-xl rounded-tr-none text-xs p-2">Need help with sizing</div>
-                </div>
-                <div className="flex gap-1.5">
-                  <div className="w-5 h-5 rounded-full bg-primary shrink-0 flex items-center justify-center">
-                    <MessageSquare className="w-2.5 h-2.5 text-white" />
+                </motion.div>
+                <motion.div variants={chatBubble} className="flex gap-1.5 origin-bottom-left">
+                  <div className="w-5 h-5 rounded-full overflow-hidden shrink-0">
+                    <img src="/material/bot dp.png" alt="Bot DP" className="w-full h-full object-cover" />
                   </div>
                   <div className="bg-white rounded-xl rounded-tl-none text-xs p-2 shadow-sm border">Generally true to size!</div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
             <div className="bg-slate-900 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
               <div className="p-2.5 border-b border-slate-700">
@@ -438,36 +516,46 @@ export function FeaturesSection() {
         <div className="flex justify-center">
           <PhoneFrame>
             <ChatHeader name={storeName} />
-            <div className="flex-1 bg-slate-50 p-3 space-y-3 overflow-y-auto">
-              <UserBubble>Where is my order #1842?</UserBubble>
-              <BotBubble>
-                <p className="mb-2 font-medium">Live status for order #1842:</p>
-                <div className="bg-slate-50 rounded-xl p-2.5 border">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-100">Out for Delivery</span>
-                    <span className="text-xs text-muted-foreground">By 3pm today</span>
+            <motion.div 
+              variants={chatContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.4 }}
+              className="flex-1 bg-slate-50 p-3 space-y-3 overflow-y-auto"
+            >
+              <motion.div variants={chatBubble} className="origin-bottom-right">
+                <UserBubble>Where is my order #1842?</UserBubble>
+              </motion.div>
+              <motion.div variants={chatBubble} className="origin-bottom-left">
+                <BotBubble>
+                  <p className="mb-2 font-medium">Live status for order #1842:</p>
+                  <div className="bg-slate-50 rounded-xl p-2.5 border">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-100">Out for Delivery</span>
+                      <span className="text-xs text-muted-foreground">By 3pm today</span>
+                    </div>
+                    <div className="space-y-1.5">
+                      {[
+                        { label: "Order Placed", done: true },
+                        { label: "Packed & Shipped", done: true },
+                        { label: "In Transit", done: true },
+                        { label: "Out for Delivery", done: true },
+                        { label: "Delivered", done: false },
+                      ].map((step, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${step.done ? "bg-primary" : "bg-slate-200"}`} />
+                          <span className={`text-xs ${step.done ? "text-foreground font-medium" : "text-muted-foreground"}`}>{step.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-2 flex items-center gap-2">
+                      <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                      <span className="text-xs text-primary font-medium">2 stops away</span>
+                    </div>
                   </div>
-                  <div className="space-y-1.5">
-                    {[
-                      { label: "Order Placed", done: true },
-                      { label: "Packed & Shipped", done: true },
-                      { label: "In Transit", done: true },
-                      { label: "Out for Delivery", done: true },
-                      { label: "Delivered", done: false },
-                    ].map((step, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${step.done ? "bg-primary" : "bg-slate-200"}`} />
-                        <span className={`text-xs ${step.done ? "text-foreground font-medium" : "text-muted-foreground"}`}>{step.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-2 flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
-                    <span className="text-xs text-primary font-medium">2 stops away</span>
-                  </div>
-                </div>
-              </BotBubble>
-            </div>
+                </BotBubble>
+              </motion.div>
+            </motion.div>
             <div className="border-t p-2 bg-white flex gap-2 shrink-0">
               <div className="flex-1 border rounded-xl px-3 py-1.5 text-xs text-muted-foreground">Message...</div>
               <button className="bg-primary rounded-xl p-1.5"><MessageSquare className="w-3.5 h-3.5 text-white" /></button>
@@ -527,18 +615,28 @@ export function FeaturesSection() {
         <div className="order-2 lg:order-1 flex justify-center">
           <PhoneFrame>
             <ChatHeader name={storeName} />
-            <div className="flex-1 bg-slate-50 p-3 space-y-3 overflow-y-auto">
-              <BotBubble>
-                <p>I'd love to keep you updated with exclusive offers. Mind sharing your details?</p>
-              </BotBubble>
-              <div className="ml-8 bg-white rounded-xl border shadow-sm p-3 space-y-2">
-                {["Your Name", "Email Address", "Phone Number"].map((ph, i) => (
-                  <div key={i} className="border rounded-lg px-3 py-2 text-xs text-muted-foreground bg-slate-50">{ph}</div>
-                ))}
-                <div className="border rounded-lg px-3 py-2 text-xs text-muted-foreground bg-slate-50 h-10">Your message...</div>
-                <button className="w-full bg-primary text-white rounded-lg py-2 text-xs font-semibold">Send Message</button>
-              </div>
-            </div>
+            <motion.div 
+              variants={chatContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.4 }}
+              className="flex-1 bg-slate-50 p-3 space-y-3 overflow-y-auto"
+            >
+              <motion.div variants={chatBubble} className="origin-bottom-left">
+                <BotBubble>
+                  <p>I'd love to keep you updated with exclusive offers. Mind sharing your details?</p>
+                </BotBubble>
+              </motion.div>
+              <motion.div variants={chatBubble} className="origin-bottom-left">
+                <div className="ml-8 bg-white rounded-xl border shadow-sm p-3 space-y-2">
+                  {["Your Name", "Email Address", "Phone Number"].map((ph, i) => (
+                    <div key={i} className="border rounded-lg px-3 py-2 text-xs text-muted-foreground bg-slate-50">{ph}</div>
+                  ))}
+                  <div className="border rounded-lg px-3 py-2 text-xs text-muted-foreground bg-slate-50 h-10">Your message...</div>
+                  <button className="w-full bg-primary text-white rounded-lg py-2 text-xs font-semibold">Send Message</button>
+                </div>
+              </motion.div>
+            </motion.div>
             <div className="border-t p-2 bg-white flex gap-2 shrink-0">
               <div className="flex-1 border rounded-xl px-3 py-1.5 text-xs text-muted-foreground">Message...</div>
               <button className="bg-primary rounded-xl p-1.5"><MessageSquare className="w-3.5 h-3.5 text-white" /></button>

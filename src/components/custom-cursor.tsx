@@ -78,7 +78,7 @@ export function CustomCursor() {
     <>
       {/* Outer Glow Ring */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-9999 hidden md:block"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
@@ -99,7 +99,7 @@ export function CustomCursor() {
       />
       {/* Inner Pointer Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2.5 h-2.5 bg-primary rounded-full pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 w-2.5 h-2.5 bg-primary rounded-full pointer-events-none z-9999 hidden md:block"
         style={{
           x: cursorX,
           y: cursorY,

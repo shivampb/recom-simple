@@ -122,8 +122,8 @@ export function HeroSection() {
             </div>
 
             {/* Divider */}
-            <div className="hidden md:block w-[1px] h-6 bg-slate-200 shrink-0" />
-            <div className="block md:hidden h-[1px] w-full bg-slate-100 shrink-0" />
+            <div className="hidden md:block w-px h-6 bg-slate-200 shrink-0" />
+            <div className="block md:hidden h-px w-full bg-slate-100 shrink-0" />
 
             {/* Phone Number Input block */}
             <div className="flex items-center flex-1 min-w-0 gap-2 px-2 py-1.5 md:py-0">
